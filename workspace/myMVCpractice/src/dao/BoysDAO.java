@@ -39,8 +39,8 @@ public class BoysDAO {
 			NameVO temp = new NameVO();
 			temp.setGender("B");
 			temp.setName(line.split("	")[0]);
-			temp.setNameNumber(Integer.parseInt(line.split("	")[1]));
-			temp.setRanking(Integer.parseInt(line.split("	")[2].replaceAll(",", "")));
+			temp.setRanking(Integer.parseInt(line.split("	")[1]));
+			temp.setNameNumber(Integer.parseInt(line.split("	")[2].replaceAll(",", "")));
 			
 			results.add(temp);
 		}

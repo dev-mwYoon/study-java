@@ -1,83 +1,121 @@
 package dao;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 import domain.NameVO;
 
 public class TotalDAO {
-	
+
+	public void writeTxt() throws IOException {
+		BufferedWriter bufferedWriter = DBConnecter.getWriter();
+		String temp = overlap().toString();
+		bufferedWriter.write(temp);
+
+		bufferedWriter.close();
+	}
+
+//	남자 여자 하나로
 	public ArrayList<NameVO> merge() throws FileNotFoundException, IOException {
 		ArrayList<NameVO> results = new ArrayList<>();
 		BoysDAO boy = new BoysDAO();
 		GirlsDAO girl = new GirlsDAO();
 		results.addAll(boy.setObject());
 		results.addAll(girl.setObject());
-		
+
 		return results;
 	}
+
 	
-	public ArrayList<NameVO> removeOverlap() throws FileNotFoundException, IOException {
+	public ArrayList<NameVO> overlap() throws FileNotFoundException, IOException {
+		ArrayList<NameVO> temp = rankingUpdate();
+		for (int i = 0; i < temp.size(); i++) {
+			try {
+				temp.get(i).setRemoveAmount("" + sort().get(i));
+			} catch (IndexOutOfBoundsException e) {
+				temp.get(i).setRemoveAmount("");
+			}
+		}
+		return temp;
+	}
+
+//	중복제거
+	public ArrayList<Integer> removeOverlap() throws FileNotFoundException, IOException {
 //		ArrayList<Integer> datas = new ArrayList<Integer>(Arrays.asList(10, 20, 20, 30, 30, 20, 50));
 //		HashSet<Integer> dataSet = new HashSet<Integer>(datas);
 //		datas = new ArrayList<Integer>(dataSet);
 //		System.out.println(datas);
-		
+
 //		ArrayList<NameVO> datas = new ArrayList<NameVO>();
 //		HashSet<NameVO> dataSet = new HashSet<NameVO>(merge());
 //		datas = new ArrayList<NameVO>(dataSet);
-		
+
 		ArrayList<Integer> amounts = new ArrayList<Integer>();
-		amounts = merge().stream().map(NameVO::getNameNumber).forEach(i -> (Object)merge().add(i));
+
+		merge().stream().map(NameVO::getNameNumber).forEach(amounts::add);
+
 		HashSet<Integer> amountSet = new HashSet<Integer>(amounts);
-		
-		
-		
-		
-		
-		
-		return datas;
+
+		amounts = new ArrayList<Integer>(amountSet);
+
+		return amounts;
 	}
-	
-	public void sort() {
+	/*
+	 * sort merge()
+	 * 
+	 */
+
+	public ArrayList<Integer> sort() throws FileNotFoundException, IOException {
+		ArrayList<Integer> temp = (ArrayList<Integer>) removeOverlap().stream().sorted(Collections.reverseOrder())
+				.collect(Collectors.toList());
+
+		return temp;
+	}
+
+	public ArrayList<NameVO> readyForRemove() throws FileNotFoundException, IOException {
+
 		ArrayList<NameVO> results = new ArrayList<NameVO>();
-//		ArrayList<NameVO> rankings = 
-		
+		ArrayList<Integer> temp = sort();
+
+		for (int i = 0; i < temp.size(); i++) {
+			for (int j = 0; j < merge().size(); j++) {
+				if (merge().get(j).getNameNumber() == temp.get(i)) {
+					results.add(merge().get(j)); 
+				}
+
+			}
+		}
+
+//		System.out.println(results);
+		return results;
+
 	}
-	
-////	이상형 나이 순 정렬
-//	public void sort() {
-////		DB에 있는 이상형들을 나이 순으로 정렬한 결과
-//		ArrayList<Love> results = new ArrayList<Love>();
-//		
-////		이상형들의 나이만 담을 자료구조
-//		ArrayList<Integer> ages = new ArrayList<Integer>();
-//		
-////		loves에서 나이를 가져와서 ages에 추가
-//		for (Love love : loves) {
-//			ages.add(love.getAge());
-//		}
-//		
-////		오름차순으로 정렬
-//		Collections.sort(ages);
-//		
-//		for (int age : ages) {
-//			for (int i=0; i<loves.size(); i++) {
-//				if(loves.get(i).getAge() == age) {
-//					results.add(loves.get(i));
-//					loves.remove(loves.get(i));
-//				}
-//			}
-//		}
-//		loves = results;
-//	}
-	
-	
-	
-	
+
+	public ArrayList<NameVO> rankingUpdate() throws FileNotFoundException, IOException {
+		ArrayList<NameVO> temp = readyForRemove();
+		int flag = 0;
+		int index = 0;
+		int data = 0;
+		for (int i = 0; i < temp.size(); i++) {
+			if (data == temp.get(i).getNameNumber()) {
+				temp.get(i).setRanking(index);
+				flag++;
+			} else {
+				index++;
+				index += flag;
+				temp.get(i).setRanking(index);
+				flag = 0;
+			}
+			data = temp.get(i).getNameNumber();
+		}
+
+//		System.out.println(temp);
+		return temp;
+	}
+
 }

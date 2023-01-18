@@ -8,6 +8,9 @@ public class NameVO {
 	private int ranking;
 	private int nameNumber;
 	private String gender;
+	private String removeAmount;
+	
+
 	
 
 	public NameVO(String gender, String name, int ranking, int nameNumber) {
@@ -46,10 +49,18 @@ public class NameVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public String getRemoveAmount() {
+		return removeAmount;
+	}
+
+	public void setRemoveAmount(String removeAmount) {
+		this.removeAmount = removeAmount;
+	}
 
 	@Override
 	public String toString() {
-		return gender + "\t" + name + "\t" + ranking + "\t" + nameNumber;  
+		return gender + "\t" + name + "\t" + ranking + "\t" + nameNumber + "\t" + removeAmount + "\n";  
 	}
 	
 	

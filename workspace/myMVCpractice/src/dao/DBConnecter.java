@@ -7,17 +7,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class DBConnecter {
-//	public static final String PATH = "salary.txt";
+	public static final String PATH = "total.txt";
 //	public static final String BOYPATH = "boyNames.txt";
 //	public static final String GIRLPATH = "girlNames.txt";
 	
-//	public static BufferedWriter getWriter() throws IOException {
-//		return new BufferedWriter(new FileWriter(PATH));
-//	}
-//	public static BufferedWriter getAppend() throws IOException {
-//		return new BufferedWriter(new FileWriter(PATH, true));
-//	}
-//	public static BufferedReader getReader() throws IOException {
-//		return new BufferedReader(new FileReader(PATH));
-//	}
+	public static BufferedWriter getWriter() throws IOException {
+		return new BufferedWriter(new FileWriter(PATH));
+	}
+	public static BufferedWriter getAppend() throws IOException {
+		return new BufferedWriter(new FileWriter(PATH, true));
+	}
+	public static BufferedReader getReader() throws IOException {
+		return new BufferedReader(new FileReader(PATH));
+	}
 }
