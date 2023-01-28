@@ -14,6 +14,41 @@ public class BoardDAO {
 	public PreparedStatement preparedStatement; //쿼리 관리 객체
 	public ResultSet resultSet; //결과 테이블 객체
 	
+	
+//	게시글 좋아요 수 증가 - TBL_BOARD
+	public void updateLike(Long boardId) {
+		String query = "UPDATE TBL_BOARD SET BOARD_LIKE = (SELECT BOARD_LIKE FROM TBL_BOARD WHERE BOARD_ID = ?) + 1 WHERE BOARD_ID = ?";
+		
+		connection = DBConnecter.getConnection();
+		
+		try {
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setLong(1, boardId);
+			preparedStatement.setLong(2, boardId);
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("updateLike(Long) SQL문 오류");
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+	}
+	
+	
 //	게시글 추가
 	public void insert(BoardVO boardVO) {
 		String query = "INSERT INTO TBL_BOARD"

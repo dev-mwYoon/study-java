@@ -7,6 +7,7 @@ public class BoardVO {
 	private String boardRegisterDate;
 	private String boardUpdateDate;
 	private Long userId;
+	private Long boardLike;
 	
 	public BoardVO() {;}
 
@@ -57,12 +58,21 @@ public class BoardVO {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+	
+	public Long getBoardLike() {
+		return boardLike;
+	}
+
+	public void setBoardLike(Long boardLike) {
+		this.boardLike = boardLike;
+	}
 
 	@Override
 	public String toString() {
 		return "BoardVO [boardId=" + boardId + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardRegisterDate=" + boardRegisterDate + ", boardUpdateDate=" + boardUpdateDate + ", userId="
-				+ userId + "]";
+				+ userId + ", boardLike=" + boardLike + "]";
 	}
-	
+
+
 }

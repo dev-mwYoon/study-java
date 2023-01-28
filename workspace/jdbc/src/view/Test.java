@@ -1,6 +1,7 @@
 package view;
 
 import dao.BoardDAO;
+import dao.LikeDAO;
 import dao.ReplyDAO;
 import dao.UserDAO;
 import domain.BoardDTO;
@@ -11,7 +12,7 @@ import domain.UserVO;
 
 public class Test {
 	public static void main(String[] args) {
-//		UserDAO userDAO = new UserDAO();
+		UserDAO userDAO = new UserDAO();
 //		if(userDAO.checkId("hds1234")) {
 //			System.out.println("사용 가능한 아이디");
 //			return;
@@ -23,7 +24,7 @@ public class Test {
 		
 //		[실습] 메소드 전체 검증
 //		회원가입
-//		UserVO userVO = new UserVO();
+		UserVO userVO = new UserVO();
 //		userVO.setUserIdentification("lss1234");
 //		userVO.setUserName("이순신");
 //		userVO.setUserPassword("1234");
@@ -32,6 +33,7 @@ public class Test {
 //		userVO.setUserEmail("lss1234@naver.com");
 //		userVO.setUserPhone("01099998888");
 //		userVO.setUserRecommenderId(null);
+		
 //		userVO.setUserIdentification("jbg1234");
 //		userVO.setUserName("장보고");
 //		userVO.setUserPassword("9999");
@@ -40,6 +42,7 @@ public class Test {
 //		userVO.setUserEmail("jbg1234@gmail.com");
 //		userVO.setUserPhone("01099991234");
 //		userVO.setUserRecommenderId("lss1234");
+		
 //		userVO.setUserIdentification("phgs1234");
 //		userVO.setUserName("박혁거세");
 //		userVO.setUserPassword("7890");
@@ -48,7 +51,7 @@ public class Test {
 //		userVO.setUserEmail("phgs1234@gmail.com");
 //		userVO.setUserPhone("01032291234");
 //		userVO.setUserRecommenderId("lss1234");
-//		
+		
 //		if(userDAO.checkId(userVO.getUserIdentification())) {
 //			userDAO.insert(userVO);
 //		}else {
@@ -56,12 +59,12 @@ public class Test {
 //		}
 		
 //		로그인
-//		if(userDAO.login("lss1234", "1234")) {
-//			System.out.println("로그인 성공");
-//			System.out.println(UserDAO.userId);
-//		}else {
-//			System.out.println("로그인 실패");
-//		}
+		if(userDAO.login("phgs1234", "7890")) {
+			System.out.println("로그인 성공");
+			System.out.println(UserDAO.userId);
+		}else {
+			System.out.println("로그인 실패");
+		}
 		
 //		아이디 찾기
 //		System.out.println(userDAO.findIdentification("01099991234"));
@@ -109,23 +112,44 @@ public class Test {
 //		회원 탈퇴
 //		userDAO.delete();
 //		==========================================================================
-//		BoardDAO boardDAO = new BoardDAO();
-		
+		BoardDAO boardDAO = new BoardDAO();
+		LikeDAO likeDAO = new LikeDAO();
 //		게시글 추가
-//		BoardVO boardVO = new BoardVO();
+		BoardVO boardVO = new BoardVO();
 //		
-//		if(userDAO.login("phgs1234", "7890")) {
+//		if(userDAO.login("lss1234", "1234")) {
 //			System.out.println("로그인 성공");
 //			System.out.println(UserDAO.userId);
 //		}else {
 //			System.out.println("로그인 실패");
 //		}
 //		
+//		boardVO.setBoardTitle("거북선에서 태어나");
+//		boardVO.setBoardContent("장군으로 강림하다.");
+//		boardVO.setUserId(UserDAO.userId);
+
 //		boardVO.setBoardTitle("알에서 태어나");
 //		boardVO.setBoardContent("왕으로 강림하다.");
 //		boardVO.setUserId(UserDAO.userId);
-//		
+//
 //		boardDAO.insert(boardVO);
+		
+//		게시글 추천 클릭
+//		if (likeDAO.checkLike(2L)) {
+//			likeDAO.insert(2L);
+//			boardDAO.updateLike(2L);
+//		} else {
+//			System.out.println("이미 추천했습니다.");
+//		}
+		
+//		게시글에 좋아요한 사람들
+//		likeDAO.likeWho(1L).stream().map(UserVO::toString).forEach(System.out::println);
+		
+//		내가 좋아요한 게시글
+//		likeDAO.likeBoard().stream().map(BoardVO::toString).forEach(System.out::println);
+		
+		
+		
 		
 //		게시글 조회
 //		System.out.println(boardDAO.select(1L));
@@ -149,18 +173,18 @@ public class Test {
 //		게시글 전체 조회
 //		boardDAO.selectAll().stream().map(BoardDTO::toString).forEach(System.out::println);
 //		==========================================================================
-		UserDAO userDAO = new UserDAO();
-		BoardDAO boardDAO = new BoardDAO();
-		ReplyDAO replyDAO = new ReplyDAO();
-		
-		if(userDAO.login("phgs1234", "7890")) {
-			System.out.println("로그인 성공");
-		}else {
-			System.out.println("로그인 실패");
-		}
-		
-		BoardDTO boardDTO = boardDAO.select(1L);
-		System.out.println(boardDTO);
+//		UserDAO userDAO = new UserDAO();
+//		BoardDAO boardDAO = new BoardDAO();
+//		ReplyDAO replyDAO = new ReplyDAO();
+//		
+//		if(userDAO.login("phgs1234", "7890")) {
+//			System.out.println("로그인 성공");
+//		}else {
+//			System.out.println("로그인 실패");
+//		}
+//		
+//		BoardDTO boardDTO = boardDAO.select(1L);
+//		System.out.println(boardDTO);
 		
 //		댓글 추가
 //		ReplyVO replyVO = new ReplyVO();
